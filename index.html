@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StillClip by manRei Lab — Minimalist High-Velocity Clipboard & Vision OCR Palette for macOS</title>
+  <meta name="description" content="StillClip is an ultra-minimalist macOS native clipboard palette with Apple Vision OCR, PDF Clean Paste, and Sequential Paste Stack. One-time $12 purchase.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+      background-color: #09090B;
+      color: #ECECEC;
+      font-variant-numeric: tabular-nums;
+    }
+    .mono {
+      font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+    }
+    .surface-card {
+      background: #121215;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-3.5 flex items-center justify-between border-b border-white/[0.07] bg-[#09090B]/90 backdrop-blur-xl">
+    <div class="flex items-center gap-2 whitespace-nowrap">
+      <div class="w-6 h-6 rounded bg-white/[0.08] border border-white/15 flex items-center justify-center text-xs font-mono text-white">
+        ⌘
+      </div>
+      <span class="font-semibold text-sm tracking-tight text-white">StillClip</span>
+      <span class="hidden sm:inline text-[11px] text-zinc-500">by manRei Lab</span>
+      <span class="text-[10px] mono px-2 py-0.5 rounded bg-white/[0.06] text-zinc-400">v2.0</span>
+    </div>
+
+    <div class="flex items-center gap-3 sm:gap-5 text-xs whitespace-nowrap">
+      <a href="#why" class="hidden sm:inline text-zinc-400 hover:text-white transition-colors">Why StillClip</a>
+      <a href="#comparison" class="hidden sm:inline text-zinc-400 hover:text-white transition-colors">Comparison</a>
+      <a href="#clean-demo" class="text-zinc-400 hover:text-white transition-colors">Live Demo</a>
+      <a href="https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE" target="_blank" rel="noopener noreferrer" class="px-3 sm:px-3.5 py-1.5 rounded-lg bg-white text-black hover:bg-zinc-200 font-semibold transition-all">
+        Buy ($12) →
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section: One Thing Leads -->
+  <section class="pt-28 pb-16 px-6 max-w-5xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 mb-6 text-[11px] text-zinc-300 mono">
+      <span>Rust + Apple Vision Neural Engine · 7.9 MB Native Binary · $12 One-Time</span>
+    </div>
+
+    <h1 class="text-2xl sm:text-5xl font-bold tracking-tight text-white leading-[1.26] mb-5">
+      スクショの文字も、PDFの改行も。<br>
+      <span class="text-zinc-400 font-normal">0.01秒で整えて貼り付ける macOS パレット</span>
+    </h1>
+
+    <p class="text-xs sm:text-sm text-zinc-400 max-w-3xl mx-auto mb-8 leading-relaxed">
+      年額サブスク（Paste $29.99/年）の疲れと、無料ツール（Maccy）の機能不足を同時に解決。<br>
+      ダブル <code class="text-zinc-200 mono">⌘C</code> で呼び出し、<code class="text-zinc-200 mono">⌥↵</code> ひとつで画像内テキスト抽出（Vision OCR）やPDF改行結合を完了します。
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12">
+      <a href="https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE" target="_blank" rel="noopener noreferrer" class="px-7 py-3 rounded-lg bg-white hover:bg-zinc-200 text-black text-xs font-semibold tracking-tight transition-all">
+        StillClip Pro を購入 ($12 買い切り) →
+      </a>
+      <a href="#clean-demo" class="px-6 py-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 text-xs font-medium border border-white/10 transition-all">
+        ブラウザ上で Clean Paste を試す
+      </a>
+    </div>
+
+    <!-- Real Split-View Palette Interactive Replica -->
+    <div class="max-w-[624px] mx-auto rounded-xl bg-[#141416] border border-white/[0.14] shadow-2xl overflow-hidden text-left">
+      <div class="h-10 px-3.5 border-b border-white/[0.08] bg-[#18181B] flex items-center justify-between text-xs">
+        <span class="text-zinc-400">Search text, URLs, or image OCR...</span>
+        <div class="flex gap-1.5 text-[10px] mono text-zinc-400">
+          <span class="px-2 py-0.5 rounded border border-white/10">Pinned</span>
+          <span class="px-2 py-0.5 rounded border border-white/10">Queue Off</span>
+          <span class="px-2 py-0.5 rounded border border-white/10">⌘,</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-12 min-h-[240px]">
+        <div class="col-span-6 border-r border-white/[0.08] p-2 space-y-1 text-xs">
+          <div onclick="setHeroPreview(0)" id="hero-row-0" class="px-2.5 py-2 rounded-lg bg-white/[0.14] text-white cursor-pointer flex justify-between items-center">
+            <span class="truncate"><span class="mono text-[10px] text-zinc-400 mr-2">1</span>[Pin] The proposed deep learn-...</span>
+            <span class="mono text-[10px] text-zinc-400">8s</span>
+          </div>
+          <div onclick="setHeroPreview(1)" id="hero-row-1" class="px-2.5 py-2 rounded-lg text-zinc-300 hover:bg-white/[0.05] cursor-pointer flex justify-between items-center">
+            <span class="truncate"><span class="mono text-[10px] text-zinc-500 mr-2">2</span>[OCR] StillClip Vision Engine...</span>
+            <span class="mono text-[10px] text-zinc-500">24s</span>
+          </div>
+          <div onclick="setHeroPreview(2)" id="hero-row-2" class="px-2.5 py-2 rounded-lg text-zinc-300 hover:bg-white/[0.05] cursor-pointer flex justify-between items-center">
+            <span class="truncate"><span class="mono text-[10px] text-zinc-500 mr-2">3</span>https://polar.sh/manrei-lab/...</span>
+            <span class="mono text-[10px] text-zinc-500">1m</span>
+          </div>
+        </div>
+        <div class="col-span-6 p-3.5 bg-[#101012] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-white/[0.07] pb-2 mb-2.5">
+              <span id="hero-meta" class="text-[10px] mono text-zinc-400">PDF CLEANER</span>
+              <span class="text-[10px] mono px-1.5 py-0.5 rounded bg-white text-black font-medium">Clean / OCR (⌥↵)</span>
+            </div>
+            <pre id="hero-inspector" class="text-[11px] mono text-zinc-200 whitespace-pre-wrap leading-relaxed">The proposed deep learning architecture demonstrates superior generalization bounds across all benchmarks.
+
+Extensive empirical evaluations confirm 0.01s latency.</pre>
+          </div>
+          <div class="pt-2 border-t border-white/[0.07] flex justify-between items-center text-[10px] mono text-zinc-500">
+            <span>100% On-Device</span>
+            <span class="text-white">Press ⌥↵ to Clean Paste</span>
+          </div>
+        </div>
+      </div>
+      <div class="h-7 px-3.5 border-t border-white/[0.07] bg-[#0E0E10] flex items-center justify-between text-[10px] mono text-zinc-500">
+        <span>1–9 Instant Paste</span>
+        <span>↵ Paste Raw</span>
+        <span>⌥↵ Clean / OCR Paste</span>
+        <span>⌘P Pin</span>
+        <span>⌘Q Stack Queue</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 Core Differentiation Pillars -->
+  <section id="why" class="py-16 px-6 max-w-5xl mx-auto border-t border-white/[0.07]">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="p-6 rounded-xl surface-card space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] mono text-zinc-400">01 · APPLE VISION NEURAL ENGINE OCR</span>
+          <span class="text-[11px] mono text-zinc-500">Replaces TextSniper ($12)</span>
+        </div>
+        <h3 class="text-base font-semibold text-white">スクショを撮るだけで画像内テキストを自動OCR検索＆ペースト</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          macOS 標準の <code class="text-zinc-200">VNRecognizeTextRequest</code>（日本語・英語）を Rust コアに統合。画面を <code class="text-zinc-200">⌘⇧⌃4</code> でクリップボードに撮った瞬間、画像内の文字を自動抽出し、検索や <code class="text-zinc-200">⌥↵</code> でのテキスト貼り付けが可能です。
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl surface-card space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] mono text-zinc-400">02 · SMART CLEAN PASTE (⌥↵)</span>
+          <span class="text-[11px] mono text-zinc-500">PDF · URL · JSON</span>
+        </div>
+        <h3 class="text-base font-semibold text-white">論文PDFのハイフン改行とURLの追跡タグを0.01秒で浄化</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          2段組PDFからコピーした際の途切れた英単語（<code class="text-zinc-200">in-\nformation</code>）や不要な改行の結合、URLの <code class="text-zinc-200">utm_* / fbclid</code> 除去、1行JSONの整形を、ペースト時の <code class="text-zinc-200">⌥↵</code> キーひとつで完結させます。
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl surface-card space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] mono text-zinc-400">03 · SEQUENTIAL PASTE STACK (⌘Q)</span>
+          <span class="text-[11px] mono text-zinc-500">FIFO Queue Mode</span>
+        </div>
+        <h3 class="text-base font-semibold text-white">「1, 2, 3と連続コピーして、順番通りに貼り付ける」FIFOキュー</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          ウィンドウを行き来する転記作業をなくす Paste Stack モードを搭載。コピーした順番にキューへ積み上げ、ターゲット画面で順番通りに流し込めます。
+        </p>
+      </div>
+
+      <div class="p-6 rounded-xl surface-card space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] mono text-zinc-400">04 · ZERO SHORTCUT CONFLICT</span>
+          <span class="text-[11px] mono text-zinc-500">CGEventTap Double ⌘C</span>
+        </div>
+        <h3 class="text-base font-semibold text-white">既存アプリのショートカットを一切奪わない「ダブル ⌘C」起動</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          CoreGraphics の Listen-Only Event Tap により、毎日使う <code class="text-zinc-200">⌘C</code> を素早く2回叩くだけ（または <code class="text-zinc-200">⌥⌥</code> / <code class="text-zinc-200">⌘⇧V</code>）で起動。直前のアクティブウィンドウへフォーカスを戻して <code class="text-zinc-200">⌘V</code> を自動注入します。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Market Comparison Table -->
+  <section id="comparison" class="py-16 px-6 max-w-5xl mx-auto border-t border-white/[0.07]">
+    <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight text-center mb-8">
+      競合クリップボードツールとの比較
+    </h2>
+    <div class="overflow-x-auto rounded-xl surface-card">
+      <table class="w-full text-left border-collapse text-xs">
+        <thead>
+          <tr class="border-b border-white/[0.08] text-zinc-400 mono">
+            <th class="py-3.5 px-4">機能 / 指標</th>
+            <th class="py-3.5 px-4 text-white font-semibold bg-white/[0.04]">StillClip Pro</th>
+            <th class="py-3.5 px-4">Paste (Setapp)</th>
+            <th class="py-3.5 px-4">Maccy</th>
+            <th class="py-3.5 px-4">TextSniper</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/[0.06] text-zinc-300">
+          <tr>
+            <td class="py-3 px-4 font-medium">価格モデル</td>
+            <td class="py-3 px-4 text-white font-semibold bg-white/[0.04] mono">$12 買い切り</td>
+            <td class="py-3 px-4 text-zinc-400 mono">$29.99 / 年 (サブスク)</td>
+            <td class="py-3 px-4 text-zinc-400 mono">$9.99 / OSS</td>
+            <td class="py-3 px-4 text-zinc-400 mono">$11.99 買い切り</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 font-medium">画像クリップの自動OCR抽出・検索</td>
+            <td class="py-3 px-4 text-white font-semibold bg-white/[0.04]">✓ 標準搭載 (Apple Vision)</td>
+            <td class="py-3 px-4 text-zinc-500">△ 一部のみ</td>
+            <td class="py-3 px-4 text-zinc-500">✕ 非対応</td>
+            <td class="py-3 px-4 text-zinc-300">✓ (履歴管理は不可)</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 font-medium">PDF改行結合・UTM除去 (Clean Paste)</td>
+            <td class="py-3 px-4 text-white font-semibold bg-white/[0.04]">✓ ⌥↵ ワンキー変換＋差分表示</td>
+            <td class="py-3 px-4 text-zinc-500">✕ プレーンテキスト化のみ</td>
+            <td class="py-3 px-4 text-zinc-500">✕ プレーンテキスト化のみ</td>
+            <td class="py-3 px-4 text-zinc-500">✕</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 font-medium">連続ペーストキュー (Paste Stack)</td>
+            <td class="py-3 px-4 text-white font-semibold bg-white/[0.04]">✓ ⌘Q FIFOキュー搭載</td>
+            <td class="py-3 px-4 text-zinc-300">✓</td>
+            <td class="py-3 px-4 text-zinc-500">✕ 非対応</td>
+            <td class="py-3 px-4 text-zinc-500">△ 加算コピーのみ</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 font-medium">ダブル ⌘C 起動 / バイナリサイズ</td>
+            <td class="py-3 px-4 text-white font-semibold bg-white/[0.04] mono">✓ 対応 · 7.9 MB (Rust)</td>
+            <td class="py-3 px-4 text-zinc-400 mono">✕ · ~95 MB</td>
+            <td class="py-3 px-4 text-zinc-300 mono">✕ · ~12 MB</td>
+            <td class="py-3 px-4 text-zinc-400 mono">✕ · ~18 MB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Interactive Clean Paste Sandbox -->
+  <section id="clean-demo" class="py-16 px-6 max-w-4xl mx-auto border-t border-white/[0.07]">
+    <div class="text-center mb-8">
+      <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+        Clean Paste エンジンの動作をその場で試す
+      </h2>
+    </div>
+
+    <div class="p-6 rounded-xl surface-card space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs pb-3 border-b border-white/[0.07]">
+        <span class="text-zinc-400">サンプルテキストをロード：</span>
+        <div class="flex gap-2">
+          <button onclick="loadSample('pdf')" class="px-2.5 py-1 rounded bg-white/[0.07] hover:bg-white/[0.14] text-zinc-200 text-[11px]">
+            論文PDF（ハイフン改行）
+          </button>
+          <button onclick="loadSample('url')" class="px-2.5 py-1 rounded bg-white/[0.07] hover:bg-white/[0.14] text-zinc-200 text-[11px]">
+            トラッキング付きURL
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label class="text-[11px] mono text-zinc-400">Raw Input (コピー元)</label>
+          <textarea id="cleaner-input" oninput="runCleaner()" rows="6" class="w-full p-3 rounded-lg bg-black/50 border border-white/10 text-xs text-zinc-200 mono focus:outline-none focus:border-white/30"></textarea>
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-[11px] mono text-white flex justify-between">
+            <span>Clean Output (⌥↵ ペースト結果)</span>
+            <span id="cleaner-diff" class="text-zinc-400"></span>
+          </label>
+          <textarea id="cleaner-output" readonly rows="6" class="w-full p-3 rounded-lg bg-black/80 border border-white/20 text-xs text-white mono focus:outline-none"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Single Focused Pricing Box -->
+  <section id="pricing" class="py-16 px-6 max-w-2xl mx-auto border-t border-white/[0.07]">
+    <div class="p-8 rounded-2xl surface-card border border-white/25 space-y-6">
+      <div class="flex items-baseline justify-between border-b border-white/[0.08] pb-5">
+        <div>
+          <span class="text-[11px] mono uppercase tracking-wider text-zinc-400">ONE-TIME LICENSE · NO SUBSCRIPTION</span>
+          <h3 class="text-2xl font-bold text-white mt-1">StillClip Pro for macOS</h3>
+        </div>
+        <div class="text-right">
+          <span class="text-3xl font-bold text-white mono">$12</span>
+          <span class="block text-[10px] text-zinc-500 mono">Lifetime Unlock</span>
+        </div>
+      </div>
+
+      <ul class="space-y-2.5 text-xs text-zinc-300">
+        <li>✓ <b>最大 200 件の永続クリップボード履歴</b>（無料評価版は直近15件）</li>
+        <li>✓ <b>Apple Vision オンデバイス画像 OCR</b>（スクショ内の日英テキストを自動抽出・検索・ペースト）</li>
+        <li>✓ <b>Smart Clean Paste (⌥↵)</b>（PDF改行結合・UTMトラッカー除去・JSON整形）</li>
+        <li>✓ <b>Sequential Paste Stack (⌘Q)</b> ＋ <b>ダブル ⌘C / ⌥⌥ トリガー</b></li>
+        <li>✓ <b>100% オフライン動作</b>（外部サーバー通信ゼロ・Apple Silicon ネイティブ DMG）</li>
+      </ul>
+
+      <a href="https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE" target="_blank" rel="noopener noreferrer" class="block w-full py-3.5 rounded-lg bg-white hover:bg-zinc-200 text-black text-center text-xs font-bold transition-all">
+        Polar.sh で StillClip Pro を購入する ($12) →
+      </a>
+      <p class="text-[10px] text-center text-zinc-500 mono">
+        Merchant of Record: Polar.sh · Organization ID: 83da2985-1e90-48d1-8999-4832ba6c2d83
+      </p>
+    </div>
+  </section>
+
+  <footer class="py-8 px-6 border-t border-white/[0.06] text-center text-[11px] text-zinc-500">
+    © 2026 manRei Lab. Engineered natively with Rust, Swift Vision, and Tauri v2 for macOS.
+  </footer>
+
+  <script>
+    const heroData = [
+      {
+        meta: 'PDF CLEANER',
+        text: 'The proposed deep learning architecture demonstrates superior generalization bounds across all benchmarks.\n\nExtensive empirical evaluations confirm 0.01s latency.'
+      },
+      {
+        meta: 'VISION OCR',
+        text: 'StillClip Vision Engine v2.0\nRecognized via Apple Vision VNRecognizeTextRequest (ja-JP / en-US)\n100% Local Neural Engine · $0.00 Cloud API Cost'
+      },
+      {
+        meta: 'URL CLEANER',
+        text: 'https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE'
+      }
+    ];
+
+    function setHeroPreview(idx) {
+      for (let i = 0; i < 3; i++) {
+        const el = document.getElementById('hero-row-' + i);
+        el.className = i === idx
+          ? 'px-2.5 py-2 rounded-lg bg-white/[0.14] text-white cursor-pointer flex justify-between items-center'
+          : 'px-2.5 py-2 rounded-lg text-zinc-300 hover:bg-white/[0.05] cursor-pointer flex justify-between items-center';
+      }
+      document.getElementById('hero-meta').innerText = heroData[idx].meta;
+      document.getElementById('hero-inspector').innerText = heroData[idx].text;
+    }
+
+    function runCleaner() {
+      const input = document.getElementById('cleaner-input').value;
+      const trimmed = input.trim();
+      if (!trimmed) {
+        document.getElementById('cleaner-output').value = '';
+        document.getElementById('cleaner-diff').innerText = '';
+        return;
+      }
+      if ((trimmed.startsWith('http://') || trimmed.startsWith('https://')) && !trimmed.includes('\n')) {
+        try {
+          const u = new URL(trimmed);
+          ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid','ref','si'].forEach(k => u.searchParams.delete(k));
+          const res = u.toString().replace(/\?$/, '');
+          document.getElementById('cleaner-output').value = res;
+          document.getElementById('cleaner-diff').innerText = `-${input.length - res.length} chars stripped`;
+          return;
+        } catch {}
+      }
+      const dehyp = input.replace(/-\r?\n\s*/g, '');
+      const paras = dehyp.split(/\n\s*\n/).map(p => p.split('\n').map(l => l.trim()).filter(Boolean).join(' ')).filter(Boolean);
+      const res = paras.join('\n\n');
+      document.getElementById('cleaner-output').value = res;
+      document.getElementById('cleaner-diff').innerText = 'Normalized';
+    }
+
+    function loadSample(type) {
+      if (type === 'pdf') {
+        document.getElementById('cleaner-input').value =
+`The proposed deep learn-
+ing architecture demon-
+strates superior generalization bounds across all bench-
+marks.
+
+Extensive empirical eval-
+uations confirm that latency is reduced by 74%.`;
+      } else {
+        document.getElementById('cleaner-input').value =
+`https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE?utm_source=twitter&utm_medium=social&utm_campaign=launch&fbclid=IwAR2x123`;
+      }
+      runCleaner();
+    }
+    loadSample('pdf');
+  </script>
+</body>
+</html>
