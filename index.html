@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StillClip — macOS クリップボード</title>
-  <meta name="description" content="コピーした履歴の検索、PDFの改行結合、画像内の文字抽出を1つのショートカットで。">
+  <title>StillClip — macOS</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -21,7 +20,6 @@
 </head>
 <body class="selection:bg-white selection:text-black">
 
-  <!-- Header -->
   <header class="max-w-3xl mx-auto px-6 py-7 flex items-center justify-between text-xs border-b border-white/[0.08]">
     <div class="flex items-center gap-2.5">
       <span class="font-semibold text-sm text-[#ECECEC]">StillClip</span>
@@ -37,38 +35,37 @@
     </div>
   </header>
 
-  <main class="max-w-3xl mx-auto px-6 pt-16 pb-24">
+  <main class="max-w-3xl mx-auto px-6 pt-14 pb-24">
 
-    <!-- Lead -->
-    <section class="mb-12">
-      <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-[#ECECEC] mb-3">
-        コピーした履歴と画像内の文字を、そのまま貼り付ける。
-      </h1>
-      <p class="text-sm text-[#86868B] leading-relaxed mb-7">
-        <code class="text-[#ECECEC] mono">⌘⇧V</code> で開き、<code class="text-[#ECECEC] mono">↵</code> で貼り付けます。<code class="text-[#ECECEC] mono">⌥↵</code> を押すと、PDFの不要な改行やURLの追跡パラメータを省いて貼り付けます。
-      </p>
+    <section class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <div>
+        <h1 class="text-lg sm:text-xl font-semibold tracking-tight text-[#ECECEC] mb-1.5">
+          コピーした履歴と画像内の文字を貼り付ける。
+        </h1>
+        <p class="text-xs text-[#86868B]">
+          <code class="text-[#ECECEC] mono">⌘⇧V</code> で起動。<code class="text-[#ECECEC] mono">⌥↵</code> でPDFの改行結合・URL整形・画像OCR貼付。
+        </p>
+      </div>
 
-      <div class="flex flex-wrap items-center gap-3 text-xs">
-        <a href="https://github.com/manRei10/stillclip/releases/download/v2.0.0/StillClip-2.0.0.dmg" class="px-4 py-2.5 rounded-lg bg-[#ECECEC] text-[#141416] font-medium hover:bg-white transition-colors">
-          Download for macOS (.dmg)
+      <div class="flex items-center gap-2.5 text-xs shrink-0">
+        <a href="https://github.com/manRei10/stillclip/releases/download/v2.0.0/StillClip-2.0.0.dmg" class="px-4 py-2 rounded-lg bg-[#ECECEC] text-[#141416] font-medium hover:bg-white transition-colors">
+          Download .dmg
         </a>
-        <a href="https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-lg border border-white/[0.14] text-[#ECECEC] hover:bg-white/[0.06] transition-colors mono">
-          Pro License $12
+        <a href="https://buy.polar.sh/polar_cl_g7AsN1UdswdXmp3amWE1Jem82fNmHfK6ATMhh38XSRE" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-lg border border-white/[0.14] text-[#ECECEC] hover:bg-white/[0.06] transition-colors mono">
+          Pro $12
         </a>
       </div>
     </section>
 
     <!-- App Window Specimen -->
-    <section class="mb-16">
+    <section>
       <div class="rounded-xl bg-[#141416] border border-white/[0.10] shadow-2xl overflow-hidden">
-        <!-- Search bar -->
         <div class="h-12 px-4 border-b border-white/[0.08] flex items-center justify-between">
           <span class="text-[13px] text-[#86868B]">Search clipboard...</span>
           <span class="text-[11px] mono text-[#86868B]">4</span>
         </div>
 
-        <!-- 2-pane body -->
-        <div class="grid grid-cols-1 sm:grid-cols-12 min-h-[260px]">
+        <div class="grid grid-cols-1 sm:grid-cols-12 min-h-[300px]">
           <div class="sm:col-span-5 border-b sm:border-b-0 sm:border-r border-white/[0.08] p-1.5 space-y-0.5 text-[12.5px]">
             <div onclick="selectClip(0)" id="clip-0" class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg bg-white/[0.11] text-[#ECECEC] cursor-pointer">
               <span class="w-3.5 text-[10.5px] mono text-[#86868B]">1</span>
@@ -105,7 +102,6 @@ Extensive empirical evaluations confirm 0.01s latency.</pre>
           </div>
         </div>
 
-        <!-- Bottom bar -->
         <div class="h-8 px-4 border-t border-white/[0.08] bg-[#141416] flex items-center justify-between text-[11px] text-[#86868B] mono">
           <span>Clipboard</span>
           <div class="flex items-center gap-4">
@@ -113,26 +109,6 @@ Extensive empirical evaluations confirm 0.01s latency.</pre>
             <span>Paste Cleaned <strong class="text-[#ECECEC] font-normal">⌥↵</strong></span>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Specification List -->
-    <section class="border-t border-white/[0.08] divide-y divide-white/[0.08] text-xs">
-      <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <span class="text-[#86868B]">画像内の文字抽出</span>
-        <span class="sm:col-span-2 text-[#ECECEC]">コピーした画像のテキストを macOS 標準の Vision フレームワーク（日本語・英語）で読み取り、検索とテキスト貼り付けに使えます。</span>
-      </div>
-      <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <span class="text-[#86868B]">整形ペースト (⌥↵)</span>
-        <span class="sm:col-span-2 text-[#ECECEC]">PDFの途中で切れた改行の結合、URLの <code class="mono">utm_*</code> パラメータ削除、JSONのインデント整形を行います。</span>
-      </div>
-      <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <span class="text-[#86868B]">保存先</span>
-        <span class="sm:col-span-2 text-[#ECECEC]">すべてのデータは Mac 内の <code class="mono">~/.config/stillclip</code> に保存され、外部へ送信されません。</span>
-      </div>
-      <div class="py-4 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <span class="text-[#86868B]">ライセンス</span>
-        <span class="sm:col-span-2 text-[#ECECEC]">無料版は直近 15 件まで保持。Pro ライセンス（$12 買い切り）で 200 件まで保持します。</span>
       </div>
     </section>
 
